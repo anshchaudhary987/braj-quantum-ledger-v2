@@ -17,42 +17,6 @@
   },
 
   "rewrites": [
-    { "source": "/api/v1/:path*", "destination": "/api/index.ts" }
-  ],
-
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        { "key": "Strict-Transport-Security",   "value": "max-age=63072000; includeSubDomains; preload" },
-        { "key": "X-Content-Type-Options",      "value": "nosniff" },
-        { "key": "X-Frame-Options",             "value": "DENY" },
-        { "key": "Referrer-Policy",             "value": "strict-origin-when-cross-origin" },
-        { "key": "Cache-Control",               "value": "no-store, max-age=0" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods","value": "GET, POST, PUT, PATCH, DELETE, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers","value": "Content-Type, Authorization, X-Idempotency-Key" },
-        { "key": "Access-Control-Max-Age",      "value": "86400" }
-      ]
-    }
-  ],
-
-  "git": {
-    "deploymentEnabled": {
-      "main": true,
-      "develop": true
-    }
-  },
-
-  "github": {
-    "enabled": true,
-    "autoJobCancelation": true,
-    "silent": false
-  }
-}
-  },
-
-  "rewrites": [
     { "source": "/api/v1/vouchers/:path*", "destination": "/api/vouchers/index.ts" },
     { "source": "/api/v1/reports/:path*", "destination": "/api/reports/index.ts" },
     { "source": "/api/v1/analytics/:path*", "destination": "/api/analytics/index.ts" },
