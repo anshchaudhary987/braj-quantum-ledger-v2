@@ -96,12 +96,12 @@ try {
 
 app.get("/api/v1/docs/openapi.yaml", (_req, res) => {
   if (!openApiSpec) return res.status(404).send("OpenAPI spec not found");
-  res.type("application/yaml").send(openApiSpec);
+  return res.type("application/yaml").send(openApiSpec);
 });
 
 app.get("/api/v1/docs/openapi.json", (_req, res) => {
   if (!openApiSpec) return res.status(404).send("OpenAPI spec not found");
-  res.type("application/yaml").send(openApiSpec);
+  return res.type("application/yaml").send(openApiSpec);
 });
 
 // ---- Error handling ----
