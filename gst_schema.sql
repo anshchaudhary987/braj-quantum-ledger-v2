@@ -250,21 +250,27 @@ BEGIN
         -- ── INTRASTATE ──────────────────────────────────────
         IF v_is_pos_ut AND NOT v_pos_has_leg THEN
             -- UT without legislature → CGST (UTGST) + UTGST
-            RETURN NEXT ('CGST',  v_half_rate, ROUND(p_taxable_value * v_half_rate / 100, 2), 1);
-            RETURN NEXT ('UTGST', v_half_rate, ROUND(p_taxable_value * v_half_rate / 100, 2), 2);
+            component := 'CGST'; tax_rate := v_half_rate; tax_amount := ROUND(p_taxable_value * v_half_rate / 100, 2); sort_order := 1;
+            RETURN NEXT;
+            component := 'UTGST'; tax_rate := v_half_rate; tax_amount := ROUND(p_taxable_value * v_half_rate / 100, 2); sort_order := 2;
+            RETURN NEXT;
         ELSE
             -- State or UT with legislature → CGST + SGST
-            RETURN NEXT ('CGST', v_half_rate, ROUND(p_taxable_value * v_half_rate / 100, 2), 1);
-            RETURN NEXT ('SGST', v_half_rate, ROUND(p_taxable_value * v_half_rate / 100, 2), 2);
+            component := 'CGST'; tax_rate := v_half_rate; tax_amount := ROUND(p_taxable_value * v_half_rate / 100, 2); sort_order := 1;
+            RETURN NEXT;
+            component := 'SGST'; tax_rate := v_half_rate; tax_amount := ROUND(p_taxable_value * v_half_rate / 100, 2); sort_order := 2;
+            RETURN NEXT;
         END IF;
     ELSE
         -- ── INTERSTATE ──────────────────────────────────────
-        RETURN NEXT ('IGST', p_igst_rate, ROUND(p_taxable_value * p_igst_rate / 100, 2), 1);
+        component := 'IGST'; tax_rate := p_igst_rate; tax_amount := ROUND(p_taxable_value * p_igst_rate / 100, 2); sort_order := 1;
+        RETURN NEXT;
     END IF;
 
     -- CESS (if applicable, always on top; applied on taxable value)
     IF p_cess_rate > 0 THEN
-        RETURN NEXT ('CESS', p_cess_rate, ROUND(p_taxable_value * p_cess_rate / 100, 2), 10);
+        component := 'CESS'; tax_rate := p_cess_rate; tax_amount := ROUND(p_taxable_value * p_cess_rate / 100, 2); sort_order := 10;
+        RETURN NEXT;
     END IF;
 
     RETURN;

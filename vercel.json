@@ -68,7 +68,6 @@
 
   "github": {
     "enabled": true,
-    "autoJobCancelation": true,
-    "silent": false
+    "autoJobCancelation": true
   }
 }

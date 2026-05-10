@@ -79,7 +79,6 @@ CREATE INDEX idx_audit_timestamp      ON audit.audit_logs(changed_at);
 
 -- 1. Revoke all destructive permissions
 REVOKE UPDATE, DELETE, TRUNCATE ON audit.audit_logs FROM PUBLIC;
-REVOKE UPDATE, DELETE, TRUNCATE ON audit.audit_logs FROM glm_app;
 
 -- 2. Only the audit_writer role can INSERT (used by triggers)
 -- (Run separately: GRANT INSERT ON audit.audit_logs TO audit_writer;)
