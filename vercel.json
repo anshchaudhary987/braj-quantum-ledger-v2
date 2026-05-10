@@ -1,0 +1,99 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+
+  "functions": {
+    "api/vouchers/*.ts": {
+      "maxDuration": 30,
+      "memory": 1024
+    },
+    "api/reports/*.ts": {
+      "maxDuration": 60,
+      "memory": 2048
+    },
+    "api/analytics/*.ts": {
+      "maxDuration": 60,
+      "memory": 2048
+    },
+    "api/auth/*.ts": {
+      "maxDuration": 10,
+      "memory": 512
+    },
+    "api/einvoice/*.ts": {
+      "maxDuration": 30,
+      "memory": 1024
+    },
+    "api/payroll/*.ts": {
+      "maxDuration": 30,
+      "memory": 1024
+    },
+    "api/ocr/*.ts": {
+      "maxDuration": 60,
+      "memory": 2048
+    },
+    "api/health.ts": {
+      "maxDuration": 5,
+      "memory": 256
+    },
+    "api/index.ts": {
+      "maxDuration": 15,
+      "memory": 512
+    }
+  },
+
+  "rewrites": [
+    { "source": "/api/v1/vouchers/:path*", "destination": "/api/vouchers/index.ts" },
+    { "source": "/api/v1/reports/:path*", "destination": "/api/reports/index.ts" },
+    { "source": "/api/v1/analytics/:path*", "destination": "/api/analytics/index.ts" },
+    { "source": "/api/v1/auth/:path*", "destination": "/api/auth/index.ts" },
+    { "source": "/api/v1/einvoice/:path*", "destination": "/api/einvoice/index.ts" },
+    { "source": "/api/v1/payroll/:path*", "destination": "/api/payroll/index.ts" },
+    { "source": "/api/v1/ocr/:path*", "destination": "/api/ocr/index.ts" },
+    { "source": "/api/v1/health", "destination": "/api/health.ts" },
+    { "source": "/api/v1/:path*", "destination": "/api/index.ts" }
+  ],
+
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/docs",
+      "permanent": false
+    }
+  ],
+
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Strict-Transport-Security",   "value": "max-age=63072000; includeSubDomains; preload" },
+        { "key": "X-Content-Type-Options",      "value": "nosniff" },
+        { "key": "X-Frame-Options",             "value": "DENY" },
+        { "key": "Referrer-Policy",             "value": "strict-origin-when-cross-origin" },
+        { "key": "Cache-Control",               "value": "no-store, max-age=0" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods","value": "GET, POST, PUT, PATCH, DELETE, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers","value": "Content-Type, Authorization, X-Idempotency-Key" },
+        { "key": "Access-Control-Max-Age",      "value": "86400" }
+      ]
+    },
+    {
+      "source": "/docs/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=86400" }
+      ]
+    }
+  ],
+
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "develop": true
+    }
+  },
+
+  "github": {
+    "enabled": true,
+    "autoJobCancelation": true,
+    "silent": false
+  }
+}

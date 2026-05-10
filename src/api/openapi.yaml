@@ -1,0 +1,497 @@
+openapi: "3.0.3"
+info:
+  title: "GLM — Next-Gen Indian Accounting SaaS API"
+  description: |
+    Core API for the GLM double-entry accounting platform.
+    Covers authentication, vouchers, reports, inventory, and GST.
+  version: "1.0.0"
+  contact:
+    name: GLM Engineering
+    email: dev@glm-saas.in
+
+servers:
+  - url: https://api.glm-saas.in/v1
+    description: Production
+  - url: http://localhost:3000/api/v1
+    description: Local development
+
+# ---------------------------------------------------------------------------
+# SECURITY SCHEMES
+# ---------------------------------------------------------------------------
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Pass the access token in the Authorization header:
+        `Authorization: Bearer <access_token>`
+
+        Access tokens expire after 15 minutes. Use the refresh endpoint
+        to obtain a new pair without re-entering credentials.
+
+  # ---- Standard Error Response ----
+  schemas:
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message, trace_id, timestamp]
+          properties:
+            code:
+              type: string
+              description: Machine-readable error code
+              example: "INSUFFICIENT_STOCK"
+            message:
+              type: string
+              description: Human-readable error description
+            details:
+              type: object
+              description: Extra context (item_id, available quantity, etc.)
+            trace_id:
+              type: string
+              format: uuid
+              description: Unique identifier for this error — quote in support tickets
+            timestamp:
+              type: string
+              format: date-time
+
+    SuccessMeta:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        trace_id:
+          type: string
+        version:
+          type: string
+
+    # ---- Auth Schemas ----
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        company_id:
+          type: integer
+          description: Required if user belongs to multiple companies
+        device_info:
+          type: string
+
+    LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        expires_in:
+          type: integer
+          example: 900
+        user:
+          $ref: "#/components/schemas/UserProfile"
+        companies:
+          type: array
+          items:
+            $ref: "#/components/schemas/CompanyBrief"
+
+    UserProfile:
+      type: object
+      properties:
+        user_id: { type: integer }
+        email: { type: string }
+        name: { type: string }
+        current_company_id: { type: integer }
+        current_company_name: { type: string }
+        roles:
+          type: array
+          items: { type: string }
+
+    CompanyBrief:
+      type: object
+      properties:
+        company_id: { type: integer }
+        company_name: { type: string }
+        gstin: { type: string }
+
+    RefreshRequest:
+      type: object
+      required: [refresh_token]
+      properties:
+        refresh_token:
+          type: string
+
+    RefreshResponse:
+      type: object
+      properties:
+        access_token: { type: string }
+        refresh_token: { type: string }
+        expires_in: { type: integer }
+
+    # ---- Sales Voucher Schemas ----
+    SalesVoucherRequest:
+      type: object
+      required: [header, line_items, tax_details, idempotency_key]
+      properties:
+        header:
+          $ref: "#/components/schemas/SalesVoucherHeader"
+        line_items:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/SalesLineItem"
+        tax_details:
+          $ref: "#/components/schemas/SalesVoucherTaxDetails"
+        idempotency_key:
+          type: string
+          format: uuid
+          description: Client-generated UUID to prevent duplicate transactions
+
+    SalesVoucherHeader:
+      type: object
+      required: [voucher_date, customer_account_id, place_of_supply_state]
+      properties:
+        voucher_date: { type: string, format: date, example: "2026-05-07" }
+        customer_account_id: { type: integer }
+        reference_number: { type: string, example: "INV-001" }
+        place_of_supply_state: { type: string, example: "27" }
+        narration: { type: string }
+        metadata: { type: object }
+
+    SalesLineItem:
+      type: object
+      required: [stock_item_id, quantity, uom_id, rate, hsn_sac_code, godown_id]
+      properties:
+        stock_item_id: { type: integer }
+        description: { type: string }
+        quantity: { type: number, exclusiveMinimum: 0 }
+        uom_id: { type: integer, description: "UOM the quantity is expressed in" }
+        rate: { type: number, description: "Per base UOM" }
+        discount_percent: { type: number, minimum: 0, maximum: 100 }
+        discount_amount: { type: number, minimum: 0 }
+        hsn_sac_code: { type: string, example: "8471" }
+        godown_id: { type: integer }
+        batch_id: { type: integer }
+        serial_numbers: { type: array, items: { type: integer } }
+
+    SalesVoucherTaxDetails:
+      type: object
+      properties:
+        counterparty_gstin: { type: string, example: "27AABCT1234A1Z5" }
+        is_rcm_applicable: { type: boolean }
+
+    SalesVoucherResponse:
+      type: object
+      properties:
+        transaction_id: { type: integer }
+        voucher_number: { type: string }
+        voucher_date: { type: string }
+        customer_name: { type: string }
+        line_items:
+          type: array
+          items:
+            $ref: "#/components/schemas/SalesVoucherLineResponse"
+        totals:
+          $ref: "#/components/schemas/VoucherTotals"
+        tax_summary:
+          type: array
+          items:
+            $ref: "#/components/schemas/TaxSummary"
+        stock_movements:
+          type: array
+          items:
+            $ref: "#/components/schemas/StockMovementSummary"
+
+    SalesVoucherLineResponse:
+      type: object
+      properties:
+        line_number: { type: integer }
+        stock_item_id: { type: integer }
+        item_name: { type: string }
+        quantity: { type: number }
+        rate: { type: number }
+        amount: { type: number }
+        discount_amount: { type: number }
+        taxable_value: { type: number }
+        tax_components:
+          type: array
+          items:
+            $ref: "#/components/schemas/TaxComponent"
+
+    VoucherTotals:
+      type: object
+      properties:
+        gross_amount: { type: number }
+        total_discount: { type: number }
+        taxable_value: { type: number }
+        total_tax: { type: number }
+        grand_total: { type: number }
+
+    TaxSummary:
+      type: object
+      properties:
+        component: { type: string, example: "CGST" }
+        rate: { type: number, example: 9 }
+        taxable_value: { type: number }
+        tax_amount: { type: number }
+
+    TaxComponent:
+      type: object
+      properties:
+        component: { type: string }
+        rate: { type: number }
+        amount: { type: number }
+
+    StockMovementSummary:
+      type: object
+      properties:
+        stock_txn_id: { type: integer }
+        item_name: { type: string }
+        quantity_out: { type: number }
+
+  # ---- Reusable Responses ----
+  responses:
+    Unauthorized:
+      description: Authentication required or token invalid
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            error:
+              code: "UNAUTHORIZED"
+              message: "Access token has expired."
+              trace_id: "550e8400-e29b-41d4-a716-446655440000"
+              timestamp: "2026-05-07T10:30:00.000Z"
+
+    Conflict:
+      description: Conflict (e.g. idempotency key reuse)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            error:
+              code: "IDEMPOTENCY_CONFLICT"
+              message: "This transaction was already processed."
+              trace_id: "..."
+              timestamp: "..."
+
+    ValidationError:
+      description: Input validation failed
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            error:
+              code: "INSUFFICIENT_STOCK"
+              message: "Insufficient stock for 'Computer Parts' in godown 'Main Warehouse'."
+              details:
+                item_id: 50
+                godown_id: 1
+                available: 5
+                requested: 10
+              trace_id: "..."
+              timestamp: "..."
+
+    RateLimited:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            error:
+              code: "RATE_LIMIT_EXCEEDED"
+              message: "Too many requests. Please retry after 45 seconds."
+              trace_id: "..."
+              timestamp: "..."
+
+# ---------------------------------------------------------------------------
+# PATHS
+# ---------------------------------------------------------------------------
+paths:
+  # ---- Auth ----
+  /auth/login:
+    post:
+      tags: [Authentication]
+      summary: Login and obtain JWT token pair
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/LoginResponse"
+                  meta:
+                    $ref: "#/components/schemas/SuccessMeta"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+
+  /auth/refresh:
+    post:
+      tags: [Authentication]
+      summary: Rotate access + refresh token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshRequest"
+      responses:
+        "200":
+          description: Token refreshed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/RefreshResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /auth/logout:
+    post:
+      tags: [Authentication]
+      summary: Revoke refresh token
+      responses:
+        "200":
+          description: Logged out
+
+  /auth/me:
+    get:
+      tags: [Authentication]
+      summary: Get current user profile
+      responses:
+        "200":
+          description: Current user
+
+  # ---- Vouchers ----
+  /vouchers/sales:
+    post:
+      tags: [Vouchers]
+      summary: Create a Sales Voucher
+      description: |
+        Creates a complete sales voucher: accounting entries, inventory
+        movements, and GST calculation — all in one atomic transaction.
+
+        **Request flow:**
+        1. Validate GSTIN + place of supply
+        2. Calculate line totals + discounts
+        3. Compute CGST/SGST/IGST based on state comparison
+        4. Create journal entries (Debit Customer, Credit Sales + Tax)
+        5. Record stock movements (OUT)
+        6. Persist tax entries for GSTR-1 filing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SalesVoucherRequest"
+            examples:
+              intrastate:
+                summary: Intra-state sale (Maharashtra → Maharashtra)
+                value:
+                  header:
+                    voucher_date: "2026-05-07"
+                    customer_account_id: 100
+                    reference_number: "INV-001"
+                    place_of_supply_state: "27"
+                    narration: "Sale of computer parts"
+                  line_items:
+                    - stock_item_id: 50
+                      quantity: 10
+                      uom_id: 2
+                      rate: 1000
+                      hsn_sac_code: "8471"
+                      godown_id: 1
+                  tax_details:
+                    counterparty_gstin: "27AABCT1234A1Z5"
+                  idempotency_key: "550e8400-e29b-41d4-a716-446655440000"
+              interstate:
+                summary: Inter-state sale (Maharashtra → Karnataka)
+                value:
+                  header:
+                    voucher_date: "2026-05-07"
+                    customer_account_id: 200
+                    reference_number: "INV-002"
+                    place_of_supply_state: "29"
+                    narration: "B2B sale to Karnataka"
+                  line_items:
+                    - stock_item_id: 60
+                      quantity: 5
+                      uom_id: 1
+                      rate: 20000
+                      hsn_sac_code: "8471"
+                      godown_id: 1
+                  tax_details:
+                    counterparty_gstin: "29ABCDE5678C1Z8"
+                  idempotency_key: "660e8400-e29b-41d4-a716-446655440001"
+      responses:
+        "201":
+          description: Sales voucher created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/SalesVoucherResponse"
+                  meta:
+                    $ref: "#/components/schemas/SuccessMeta"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "409":
+          $ref: "#/components/responses/Conflict"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+
+  # ---- Health ----
+  /health:
+    get:
+      tags: [System]
+      summary: Health check
+      security: []
+      responses:
+        "200":
+          description: Service is healthy
+
+# ---------------------------------------------------------------------------
+# TAGS
+# ---------------------------------------------------------------------------
+tags:
+  - name: Authentication
+    description: Login, token refresh, logout
+  - name: Vouchers
+    description: Accounting voucher creation (Sales, Purchase, Payment, etc.)
+  - name: System
+    description: Health checks and diagnostics
