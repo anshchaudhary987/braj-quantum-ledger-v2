@@ -1,4 +1,5 @@
-import pino from "pino";
+import { default as PinoDefault } from "pino";
+const pino = PinoDefault as any;
 
 // ---------------------------------------------------------------------------
 // STRUCTURED LOGGING WITH PINO
@@ -53,7 +54,7 @@ export const logger = pino({
   },
   // In production, add hooks for additional processing
   hooks: {
-    logMethod(inputArgs, method) {
+    logMethod(inputArgs: unknown[], method: (...args: unknown[]) => unknown) {
       // Ensures proper formatting for Pino standards
       return method.apply(this, inputArgs);
     },

@@ -2,43 +2,54 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
 
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+
   "functions": {
-    "api/vouchers/*.ts": {
+    "api/*.ts": {
       "maxDuration": 30,
       "memory": 1024
-    },
-    "api/reports/*.ts": {
-      "maxDuration": 60,
-      "memory": 2048
-    },
-    "api/analytics/*.ts": {
-      "maxDuration": 60,
-      "memory": 2048
-    },
-    "api/auth/*.ts": {
-      "maxDuration": 10,
-      "memory": 512
-    },
-    "api/einvoice/*.ts": {
-      "maxDuration": 30,
-      "memory": 1024
-    },
-    "api/payroll/*.ts": {
-      "maxDuration": 30,
-      "memory": 1024
-    },
-    "api/ocr/*.ts": {
-      "maxDuration": 60,
-      "memory": 2048
     },
     "api/health.ts": {
       "maxDuration": 5,
       "memory": 256
-    },
-    "api/index.ts": {
-      "maxDuration": 15,
-      "memory": 512
     }
+  },
+
+  "rewrites": [
+    { "source": "/api/v1/:path*", "destination": "/api/index.ts" }
+  ],
+
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Strict-Transport-Security",   "value": "max-age=63072000; includeSubDomains; preload" },
+        { "key": "X-Content-Type-Options",      "value": "nosniff" },
+        { "key": "X-Frame-Options",             "value": "DENY" },
+        { "key": "Referrer-Policy",             "value": "strict-origin-when-cross-origin" },
+        { "key": "Cache-Control",               "value": "no-store, max-age=0" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods","value": "GET, POST, PUT, PATCH, DELETE, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers","value": "Content-Type, Authorization, X-Idempotency-Key" },
+        { "key": "Access-Control-Max-Age",      "value": "86400" }
+      ]
+    }
+  ],
+
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "develop": true
+    }
+  },
+
+  "github": {
+    "enabled": true,
+    "autoJobCancelation": true,
+    "silent": false
+  }
+}
   },
 
   "rewrites": [

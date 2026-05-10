@@ -62,56 +62,58 @@ app.use((req, _res, next) => {
   next();
 });
 
-// ---- Health check (basic — detailed health at /api/v1/health) ----
-app.get("/health", (_req, res) => {
-  res.json({ 
-    status: "ok", 
-    timestamp: new Date().toISOString(),
-    env: {
-      DATABASE_URL: !!process.env.DATABASE_URL,
-      NEON_DATABASE_URL: !!process.env.NEON_DATABASE_URL,
-      JWT_SECRET: !!process.env.JWT_SECRET,
-      NODE_ENV: process.env.NODE_ENV
-    }
+  // ---- Health check (basic — detailed health at /api/v1/health) ----
+  app.get("/health", (_req, res) => {
+    res.json({ 
+      status: "ok", 
+      timestamp: new Date().toISOString(),
+      env: {
+        DATABASE_URL: !!process.env.DATABASE_URL,
+        NEON_DATABASE_URL: !!process.env.NEON_DATABASE_URL,
+        JWT_SECRET: !!process.env.JWT_SECRET,
+        NODE_ENV: process.env.NODE_ENV
+      }
+    });
   });
-});
 
-// ---- API Routes ----
-app.use("/api/v1/health", healthRouter);
-app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/vouchers", voucherRoutes);
-app.use("/api/v1/einvoice", einvoiceRoutes);
-app.use("/api/v1/payroll", payrollRoutes);
-app.use("/api/v1/ocr", ocrRoutes);
-app.use("/api/v1/tally-import", tallyImportRoutes);
+  // ---- API Routes ----
+  app.use("/api/v1/health", healthRouter);
+  app.use("/api/v1/auth", authRoutes);
+  app.use("/api/v1/vouchers", voucherRoutes);
+  app.use("/api/v1/einvoice", einvoiceRoutes);
+  app.use("/api/v1/payroll", payrollRoutes);
+  app.use("/api/v1/ocr", ocrRoutes);
+  app.use("/api/v1/tally-import", tallyImportRoutes);
 
-// ---- API Documentation (Swagger UI) ----
-// In production, serve the OpenAPI spec via a dedicated route.
-let openApiSpec = "";
-try {
-  openApiSpec = readFileSync(new URL("./openapi.yaml", import.meta.url), "utf8");
-} catch (err) {
-  console.warn("Warning: Could not load openapi.yaml", err);
-}
+  // ---- API Documentation (Swagger UI) ----
+  // In production, serve the OpenAPI spec via a dedicated route.
+  let openApiSpec = "";
+  try {
+    openApiSpec = readFileSync(new URL("./openapi.yaml", import.meta.url), "utf8");
+  } catch (err) {
+    // Silently ignore missing OpenAPI spec in production
+    // This is expected in serverless environments where file paths may differ
+  }
 
-app.get("/api/v1/docs/openapi.yaml", (_req, res) => {
-  if (!openApiSpec) return res.status(404).send("OpenAPI spec not found");
-  return res.type("application/yaml").send(openApiSpec);
-});
+  app.get("/api/v1/docs/openapi.yaml", (_req, res) => {
+    if (!openApiSpec) return res.status(404).send("OpenAPI spec not found");
+    return res.type("application/yaml").send(openApiSpec);
+  });
 
-app.get("/api/v1/docs/openapi.json", (_req, res) => {
-  if (!openApiSpec) return res.status(404).send("OpenAPI spec not found");
-  return res.type("application/yaml").send(openApiSpec);
-});
+  app.get("/api/v1/docs/openapi.json", (_req, res) => {
+    if (!openApiSpec) return res.status(404).send("OpenAPI spec not found");
+    return res.type("application/yaml").send(openApiSpec);
+  });
 
 // ---- Error handling ----
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-// ---- Start server ----
+// ---- Start server (only in non-serverless environments) ----
 const PORT = Number(process.env.PORT) || 3000;
 
-if (process.env.NODE_ENV !== "test") {
+// Only start the server if NOT on Vercel and not in test mode
+if (process.env.NODE_ENV !== "test" && !process.env.VERCEL) {
   app.listen(PORT, () => {
     logger.info(`GLM API server started on port ${PORT}`);
   });

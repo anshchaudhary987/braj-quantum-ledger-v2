@@ -34,9 +34,10 @@ const pool = new Pool({
         password: process.env.DB_PASSWORD ?? "",
       }),
   ssl: sslEnabled ? { rejectUnauthorized: false } : undefined,
-  max: Number(process.env.DB_POOL_MAX) || 20,
-  idleTimeoutMillis: Number(process.env.DB_POOL_IDLE_MS) || 30_000,
-  connectionTimeoutMillis: 5000,
+  max: Number(process.env.DB_POOL_MAX) || 5,  // Reduced from 20 for serverless environments
+  idleTimeoutMillis: Number(process.env.DB_POOL_IDLE_MS) || 10_000,  // Shorter idle timeout
+  connectionTimeoutMillis: 3000,  // Faster timeout for serverless
+  allowExitOnIdle: true,  // Allow pool to exit when idle (important for serverless)
 });
 
 // ---------------------------------------------------------------------------
@@ -64,7 +65,7 @@ pool.on("remove", () => {
   // Optional: track connection removals for metrics
 });
 
-// Graceful shutdown: drain pool on SIGTERM/SIGINT
+// Graceful shutdown: drain pool on SIGTERM/SIGINT (only in traditional server environments, not serverless)
 function gracefulShutdown(): void {
   console.log("Draining database pool...");
   pool.end().then(() => {
@@ -76,7 +77,8 @@ function gracefulShutdown(): void {
   });
 }
 
-if (process.env.NODE_ENV !== "test") {
+// Only register signal handlers if NOT in serverless environment
+if (process.env.NODE_ENV !== "test" && !process.env.VERCEL) {
   process.on("SIGTERM", gracefulShutdown);
   process.on("SIGINT", gracefulShutdown);
 }

@@ -14,7 +14,7 @@
 
 import { PoolClient } from "pg";
 import { YearEndClosing, YearEndSummary } from "./closing-types.js";
-import { getFinancialYear } from "@services";
+import { getFinancialYear } from "../services/helpers.js";
 
 export class YearEndClosingService {
   constructor(private readonly client: PoolClient) {}

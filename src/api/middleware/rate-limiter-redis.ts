@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import Redis from "ioredis";
+import { Redis as RedisClient } from "ioredis";
 import { ErrorCode } from "../errors.js";
 import { AppError } from "../auth/auth-service.js";
 import { logger } from "../../config/logger.js";
@@ -12,24 +12,33 @@ import { logger } from "../../config/logger.js";
 // Redis keys expire automatically after the window period.
 // ---------------------------------------------------------------------------
 
-const REDIS_URL = process.env.REDIS_URL ?? "redis://localhost:6379";
+const REDIS_URL = process.env.REDIS_URL;
 
 // ---------------------------------------------------------------------------
 // LAZY REDIS CLIENT — connect only when needed (prevents startup delay)
+// Falls back to in-memory storage if Redis is unavailable
 // ---------------------------------------------------------------------------
-let _redisClient: Redis | null = null;
+let _redisClient: RedisClient | null = null;
+let _redisUnavailableLogged = false;
 
-function getRedisClient(): Redis {
+function getRedisClient(): RedisClient | null {
+  if (!REDIS_URL) {
+    if (!_redisUnavailableLogged) {
+      _redisUnavailableLogged = true;
+    }
+    return null;
+  }
+
   if (!_redisClient) {
-    _redisClient = new Redis(REDIS_URL, {
+    _redisClient = new RedisClient(REDIS_URL, {
       lazyConnect: true,
       maxRetriesPerRequest: 3,
-      retryStrategy: (times) => {
+      retryStrategy: (times: number) => {
         return Math.min(times * 50, 2000); // Exponential backoff up to 2s
       },
     });
 
-    _redisClient.on("error", (err) => {
+    _redisClient.on("error", (err: Error) => {
       logger.error({ err, source: "rate-limiter-redis" }, "Redis connection error");
     });
 
@@ -62,6 +71,44 @@ const CONFIG: Record<string, RateLimitConfig> = {
   voucher: { max: 30, windowSeconds: 60 },        // 30 per minute
 };
 
+// In-memory fallback storage when Redis is unavailable
+const inMemoryStore = new Map<string, { timestamps: number[] }>();
+
+// ---------------------------------------------------------------------------
+// IN-MEMORY RATE LIMITER (Fallback)
+// ---------------------------------------------------------------------------
+function checkInMemoryRateLimit(
+  key: string,
+  config: RateLimitConfig,
+  now: number,
+  windowMs: number,
+  clearBefore: number
+): { allowed: boolean; retryAfter: number; remaining: number } {
+  let data = inMemoryStore.get(key);
+  if (!data) {
+    data = { timestamps: [] };
+    inMemoryStore.set(key, data);
+  }
+
+  // Clear old entries
+  data.timestamps = data.timestamps.filter((ts: number) => ts > clearBefore);
+
+  const currentCount = data.timestamps.length;
+
+  if (currentCount >= config.max) {
+    const oldestTimestamp = data.timestamps[0] || (now - windowMs);
+    const retryAfter = Math.ceil((oldestTimestamp + windowMs - now) / 1000);
+    return { allowed: false, retryAfter: Math.max(retryAfter, 1), remaining: 0 };
+  }
+
+  data.timestamps.push(now);
+  return {
+    allowed: true,
+    retryAfter: 0,
+    remaining: Math.max(config.max - currentCount - 1, 0),
+  };
+}
+
 // ---------------------------------------------------------------------------
 // CORE RATE LIMITER USING REDIS + SLIDING WINDOW
 // ---------------------------------------------------------------------------
@@ -74,6 +121,11 @@ async function checkRateLimit(
   const now = Date.now();
   const windowMs = config.windowSeconds * 1000;
   const clearBefore = now - windowMs;
+
+  // If Redis is unavailable, use in-memory fallback
+  if (!client) {
+    return checkInMemoryRateLimit(key, config, now, windowMs, clearBefore);
+  }
 
   try {
     // Remove old entries outside the current window (sliding window)
@@ -100,13 +152,9 @@ async function checkRateLimit(
       remaining: Math.max(config.max - currentCount - 1, 0),
     };
   } catch (err) {
-    // Redis failure: fail closed in production, fail open only for local development.
-    logger.error({ err, key, source: "rate-limiter" }, "Redis rate limiter failed");
-    if (process.env.NODE_ENV === "production") {
-      return { allowed: false, retryAfter: 60, remaining: 0 };
-    }
-
-    return { allowed: true, retryAfter: 0, remaining: 0 };
+    // Redis failure: fall back to in-memory
+    logger.error({ err, key, source: "rate-limiter" }, "Redis rate limiter failed, falling back to in-memory");
+    return checkInMemoryRateLimit(key, config, now, windowMs, clearBefore);
   }
 }
 

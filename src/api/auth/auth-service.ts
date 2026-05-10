@@ -24,16 +24,22 @@ const REFRESH_TOKEN_TTL = 7 * 24 * 60 * 60; // 7 days
 
 type UnsignedJwtPayload = Omit<JwtPayload, "iat" | "exp">;
 
-const JWT_SECRET = (() => {
-  const secret = process.env.JWT_SECRET;
-  if (!secret || secret.length < 32) {
-    throw new Error(
-      "JWT_SECRET environment variable is required and must be at least 32 characters long. " +
-      "Generate a secure secret with: node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\""
-    );
+// Lazy-initialized JWT_SECRET to prevent crash at module import time on serverless
+let _jwtSecret: string | null = null;
+
+function getJwtSecret(): string {
+  if (!_jwtSecret) {
+    const secret = process.env.JWT_SECRET;
+    if (!secret || secret.length < 32) {
+      throw new Error(
+        "JWT_SECRET environment variable is required and must be at least 32 characters long. " +
+        "Generate a secure secret with: node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\""
+      );
+    }
+    _jwtSecret = secret;
   }
-  return secret;
-})();
+  return _jwtSecret;
+}
 
 export class AuthService {
   constructor(
@@ -278,7 +284,7 @@ export class AuthService {
   // -----------------------------------------------------------------------
   verifyAccessToken(token: string): JwtPayload {
     try {
-      const decoded = jwt.verify(token, JWT_SECRET);
+      const decoded = jwt.verify(token, getJwtSecret());
       if (!this.isJwtPayload(decoded)) {
         throw new AppError(ErrorCode.UNAUTHORIZED, "Invalid access token.");
       }
@@ -291,9 +297,9 @@ export class AuthService {
     }
   }
 
-  // -----------------------------------------------------------------------
+  // -----------------------------------------------------------------
   // PRIVATE HELPERS
-  // -----------------------------------------------------------------------
+  // -----------------------------------------------------------------
   private async generateTokenPair(
     userId: number,
     companyId: number,
@@ -306,7 +312,7 @@ export class AuthService {
     // Access token — short-lived, stateless
     const accessToken = jwt.sign(
       accessPayload,
-      JWT_SECRET,
+      getJwtSecret(),
       { expiresIn: ACCESS_TOKEN_TTL }
     );
 
