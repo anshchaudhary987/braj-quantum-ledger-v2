@@ -9,7 +9,7 @@ export type {
   ApiSuccessResponse,
   PaginatedResponse,
   PaginationParams,
-} from "./errors";
+} from "./errors.js";
 export type {
   LoginRequest,
   LoginResponse,
@@ -21,7 +21,7 @@ export type {
   SalesVoucherRequest,
   SalesVoucherResponse,
   SalesVoucherLineResponse,
-} from "./types";
+} from "./types.js";
 export { EinvoiceService, Inv01PayloadMapper, GspAuthService, DistanceService, RetryWorker } from "../einvoicing.js";
 export type {
   EInvoiceDetailRow, EwayBillDetailRow, RetryQueueRow,
@@ -29,14 +29,14 @@ export type {
   GenerateEinvoiceInput, GenerateEwayBillInput,
   CancelEinvoiceInput, CancelEwayBillInput,
   DistanceCalcResult, GspApiResponse,
-} from "../einvoicing";
+} from "../einvoicing.js";
 export { PayrollService, PayrollEngine } from "../payroll.js";
 export type {
   EmployeeRow, SalaryStructureRow, PayPeriodRow, AttendanceLogRow,
   PayrollRunRow, PayrollRunDetailRow, EmployeePayrollResult, PayrollRunResult,
   CreateEmployeeInput, CreateSalaryStructureInput, CreatePayPeriodInput,
   MarkAttendanceInput, RunPayrollInput, ApprovePayrollInput, JournalSummary,
-} from "../payroll";
+} from "../payroll.js";
 export { DocumentService, AiExtractionPipeline } from "../ocr.js";
 export type {
   UploadedDocumentRow, OcrExtractionResultRow, ExtractedInvoiceData,
@@ -44,10 +44,10 @@ export type {
   UploadDocumentInput, StartExtractionInput,
   ApproveDraftVoucherInput, RejectVoucherInput, AmendExtractionInput,
   DocumentPreviewResponse, ExtractionReviewResponse,
-} from "../ocr";
+} from "../ocr.js";
 export { TallyImportEngine, TallyXmlParser, parseTallyDate, normalizeAccountName } from "../tally-import.js";
 export type {
   TallyImportBatchRow, TallyMasterMappingRow,
   Phase1Result, Phase2Result, TallyImportResult, VerificationResult,
   StartTallyImportInput,
-} from "../tally-import";
+} from "../tally-import.js";

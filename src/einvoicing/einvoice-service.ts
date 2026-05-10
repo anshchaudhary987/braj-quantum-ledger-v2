@@ -20,7 +20,7 @@ import {
   CancelEinvoiceInput,
   DistanceCalcResult,
   RetryQueueRow,
-} from "./einvoice-types";
+} from "./einvoice-types.js";
 import { Inv01PayloadMapper } from "./payload-mapper.js";
 import { DistanceService } from "./distance-service.js";
 import { GspAuthService } from "./gsp-auth.js";

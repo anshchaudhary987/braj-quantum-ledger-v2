@@ -11,7 +11,7 @@ import {
   AgingReportRow,
   CreditValidationResult,
   BillReferenceRow,
-} from "./billing-types";
+} from "./billing-types.js";
 import { AppError } from "../api/auth/auth-service.js";
 import { ErrorCode } from "../api/errors.js";
 

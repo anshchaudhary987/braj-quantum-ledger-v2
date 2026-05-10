@@ -17,7 +17,7 @@ import { TallyImportEngine } from "../../tally-import/tally-import-engine.js";
 import {
   StartTallyImportInput,
   TallyImportStatus,
-} from "../../tally-import/tally-types";
+} from "../../tally-import/tally-types.js";
 
 const router = Router();
 const canManageTallyImport = requireRole("OWNER", "ADMIN", "ACCOUNTANT");

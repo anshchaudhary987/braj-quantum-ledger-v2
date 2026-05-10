@@ -4,7 +4,7 @@ import {
   BudgetRow,
   BudgetPeriodRow,
   BudgetVarianceRow,
-} from "./budget-types";
+} from "./budget-types.js";
 import { AppError } from "../api/auth/auth-service.js";
 import { ErrorCode } from "../api/errors.js";
 

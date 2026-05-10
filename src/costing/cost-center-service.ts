@@ -10,7 +10,7 @@ import {
   CostCenterRow,
   CostCenterClassRow,
   CostCenterClassSplitRow,
-} from "./costing-types";
+} from "./costing-types.js";
 import { AppError } from "../api/auth/auth-service.js";
 import { ErrorCode } from "../api/errors.js";
 

@@ -7,7 +7,7 @@ import {
   HsnSacRow,
   GstRegistrationRow,
   StateMasterRow,
-} from "./gst-types";
+} from "./gst-types.js";
 import { validateGstin, validatePlaceOfSupply } from "./gst-validator.js";
 
 // ---------------------------------------------------------------------------

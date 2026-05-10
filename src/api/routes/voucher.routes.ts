@@ -14,7 +14,7 @@ import {
   SalesVoucherRequest,
   SalesVoucherResponse,
   SalesVoucherLineResponse,
-} from "../types";
+} from "../types.js";
 import { ErrorCode } from "../errors.js";
 import { PoolClient } from "pg";
 

@@ -22,7 +22,7 @@ import {
   MarkAttendanceInput,
   RunPayrollInput,
   ApprovePayrollInput,
-} from "../../payroll/payroll-types";
+} from "../../payroll/payroll-types.js";
 
 const router = Router();
 const canManagePayroll = requireRole("OWNER", "ADMIN", "ACCOUNTANT");

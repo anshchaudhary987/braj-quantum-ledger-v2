@@ -7,7 +7,7 @@ import {
   TdsThresholdTrackerRow,
   TdsDeductionInput,
   TdsDeductionResult,
-} from "./tds-types";
+} from "./tds-types.js";
 import { AppError } from "../api/auth/auth-service.js";
 import { ErrorCode } from "../api/errors.js";
 

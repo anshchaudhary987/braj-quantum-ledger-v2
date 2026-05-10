@@ -8,4 +8,4 @@ export type {
   TrialBalanceReport,
   LedgerEntry,
   LedgerReport,
-} from "./reporting-service";
+} from "./reporting-service.js";

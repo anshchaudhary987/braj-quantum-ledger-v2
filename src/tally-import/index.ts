@@ -26,4 +26,4 @@ export type {
   RetryFailedVouchersInput,
   GetImportStatusInput,
   TALLY_VOUCHER_TYPE_MAP,
-} from "./tally-types";
+} from "./tally-types.js";

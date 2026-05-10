@@ -4,11 +4,11 @@ import {
   CreateTransactionInput,
   JournalLine,
   TransactionRow,
-} from "../models/types";
+} from "../models/types.js";
 import {
   IdempotencyConflictError,
   InsufficientBalanceError,
-} from "../errors";
+} from "../errors.js";
 
 /**
  * TRANSACTION MANAGER SERVICE

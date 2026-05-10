@@ -20,7 +20,7 @@ import {
   Inv01DocumentDetail,
   SupplyType,
   EwayBillPayload,
-} from "./einvoice-types";
+} from "./einvoice-types.js";
 import { TaxEntryRow, GstRegistrationRow, StateMasterRow } from "../gst/gst-types.js";
 
 // ── INTERNAL ROW TYPES (extended for this module) ───────────────────────────

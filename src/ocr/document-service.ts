@@ -10,7 +10,7 @@ import {
   DocumentPreviewResponse,
   DocEntityType,
   DocumentStatus,
-} from "./ocr-types";
+} from "./ocr-types.js";
 
 export class DocumentService {
   constructor(private readonly client: PoolClient) {}

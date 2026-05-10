@@ -37,7 +37,7 @@ import {
   StartExtractionInput,
   SmartMatchResult,
   ReviewDecision,
-} from "./ocr-types";
+} from "./ocr-types.js";
 
 export class AiExtractionPipeline {
   constructor(private readonly client: PoolClient) {}

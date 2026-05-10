@@ -6,7 +6,7 @@ import {
   UomRow,
   StockItemRow,
   StockTransactionRow,
-} from "./inventory-types";
+} from "./inventory-types.js";
 
 // ---------------------------------------------------------------------------
 // INVENTORY SERVICE — UOM conversion + stock movement operations

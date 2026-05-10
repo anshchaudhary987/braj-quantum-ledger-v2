@@ -15,7 +15,7 @@ import {
   ExecutiveDashboard,
   DashboardKeyMetrics,
   AccountClassification,
-} from "./analytics-types";
+} from "./analytics-types.js";
 
 export class AnalyticsService {
   constructor(private readonly client: PoolClient) {}

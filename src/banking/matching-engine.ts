@@ -4,7 +4,7 @@ import {
   AutoMatchResult,
   ReconciliationRuleRow,
   ReconciliationStatus,
-} from "./banking-types";
+} from "./banking-types.js";
 
 // ---------------------------------------------------------------------------
 // MATCHING ENGINE — Weighted scoring algorithm for auto-reconciliation

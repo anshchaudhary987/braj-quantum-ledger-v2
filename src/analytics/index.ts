@@ -7,7 +7,7 @@ export { AnalyticsCache, analyticsCache, determineAffectedReports } from "./anal
 export type { AccountClassification as CacheAccountClassification } from "./analytics-cache.js";
 export {
   AnalyticsEventType,
-} from "./analytics-types";
+} from "./analytics-types.js";
 export type {
   CashFlowLine,
   CashFlowReport,
@@ -25,4 +25,4 @@ export type {
   InvalidationPayload,
   AccountClassification,
   ReportType,
-} from "./analytics-types";
+} from "./analytics-types.js";

@@ -30,4 +30,4 @@ export type {
   MarkAttendanceInput,
   RunPayrollInput,
   ApprovePayrollInput,
-} from "./payroll-types";
+} from "./payroll-types.js";

@@ -20,7 +20,7 @@ import {
   SalaryComponentResult,
   StatutoryDeductions,
   EmployeePayrollResult,
-} from "./payroll-types";
+} from "./payroll-types.js";
 
 export class PayrollEngine {
   constructor(private readonly client: PoolClient) {}

@@ -12,7 +12,7 @@ import {
   JwtPayload,
   UserProfile,
   CompanyBrief,
-} from "../types";
+} from "../types.js";
 import { ErrorCode } from "../errors.js";
 
 // ---------------------------------------------------------------------------

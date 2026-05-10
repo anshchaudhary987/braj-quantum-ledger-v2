@@ -11,7 +11,7 @@ import {
   ExchangeRate,
   ForexRevaluationRun,
   RegisterForexInput,
-} from "./forex-types";
+} from "./forex-types.js";
 
 export class ForexService {
   constructor(private readonly client: PoolClient) {}

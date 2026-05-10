@@ -31,4 +31,4 @@ export type {
   LlmExtractionResponse,
   DocumentPreviewResponse,
   ExtractionReviewResponse,
-} from "./ocr-types";
+} from "./ocr-types.js";

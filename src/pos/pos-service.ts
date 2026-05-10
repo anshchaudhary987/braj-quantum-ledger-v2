@@ -9,7 +9,7 @@ import {
   POSTenderType,
   POSLineItem,
   POSTenderPayment,
-} from "./pos-types";
+} from "./pos-types.js";
 
 export class POSService {
   constructor(private readonly client: PoolClient) {}

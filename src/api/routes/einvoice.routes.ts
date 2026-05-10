@@ -20,7 +20,7 @@ import {
   GenerateEinvoiceInput,
   GenerateEwayBillInput,
   CancelEinvoiceInput,
-} from "../../einvoicing/einvoice-types";
+} from "../../einvoicing/einvoice-types.js";
 
 const router = Router();
 const canManageEinvoice = requireRole("OWNER", "ADMIN", "ACCOUNTANT");

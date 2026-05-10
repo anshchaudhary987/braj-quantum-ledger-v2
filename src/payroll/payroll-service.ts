@@ -18,7 +18,7 @@ import {
   CreateSalaryStructureInput,
   CreatePayPeriodInput,
   MarkAttendanceInput,
-} from "./payroll-types";
+} from "./payroll-types.js";
 
 export class PayrollService {
   constructor(private readonly client: PoolClient) {}

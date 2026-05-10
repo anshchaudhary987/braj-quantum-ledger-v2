@@ -27,7 +27,7 @@ import {
   OcrProvider,
   LlmModel,
   DocumentStatus,
-} from "../../ocr/ocr-types";
+} from "../../ocr/ocr-types.js";
 
 const router = Router();
 const canManageOcr = requireRole("OWNER", "ADMIN", "ACCOUNTANT");

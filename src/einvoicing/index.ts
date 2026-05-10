@@ -33,4 +33,4 @@ export type {
   CancelEwayBillInput,
   DistanceCalcResult,
   GspApiResponse,
-} from "./einvoice-types";
+} from "./einvoice-types.js";

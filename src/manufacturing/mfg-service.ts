@@ -5,7 +5,7 @@ import {
   BomRow,
   BomItemRow,
   MfgJournalRow,
-} from "./manufacturing-types";
+} from "./manufacturing-types.js";
 import { AppError } from "../api/auth/auth-service.js";
 import { ErrorCode } from "../api/errors.js";
 

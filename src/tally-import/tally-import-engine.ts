@@ -27,7 +27,7 @@ import {
   TallyLedger, TallyGroup, TallyVoucher,
   TallyImportBatchRow, Phase1Result, Phase2Result,
   TallyImportResult, VerificationResult, TallyImportStatus,
-} from "./tally-types";
+} from "./tally-types.js";
 
 const DEFAULT_BATCH_SIZE = 500;
 const S3_CLIENT = new S3Client({ region: process.env.AWS_REGION ?? "ap-south-1" });

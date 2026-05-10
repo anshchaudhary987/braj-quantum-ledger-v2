@@ -4,7 +4,7 @@ import {
   CreateJobWorkInChallanInput,
   DeliveryChallanRow,
   DeliveryChallanItemRow,
-} from "./jobwork-types";
+} from "./jobwork-types.js";
 import { AppError } from "../api/auth/auth-service.js";
 import { ErrorCode } from "../api/errors.js";
 

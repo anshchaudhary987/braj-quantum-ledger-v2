@@ -10,7 +10,7 @@ import {
   CreateVoucherFromBankEntryInput,
   MatchCandidate,
   AutoMatchResult,
-} from "./banking-types";
+} from "./banking-types.js";
 import { AppError } from "../api/auth/auth-service.js";
 import { ErrorCode } from "../api/errors.js";
 

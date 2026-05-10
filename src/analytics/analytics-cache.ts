@@ -21,7 +21,7 @@ import {
   CacheEnvelope,
   AnalyticsEventType,
   InvalidationPayload,
-} from "./analytics-types";
+} from "./analytics-types.js";
 
 // ---------------------------------------------------------------------------
 // REDIS CLIENT ABSTRACTION — Swap with ioredis or node-redis in production
