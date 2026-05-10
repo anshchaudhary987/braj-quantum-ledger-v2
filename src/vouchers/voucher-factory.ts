@@ -1,7 +1,7 @@
 import { VoucherStrategy } from "./voucher-strategy.js";
 import { PaymentVoucherStrategy } from "./payment-voucher.js";
 import { ReceiptVoucherStrategy } from "./receipt-voucher.js";
-import { UnknownVoucherTypeError } from "../errors.js";
+import { UnknownVoucherTypeError } from "../errors/index.js";
 
 /**
  * Factory — registers all known voucher strategies and resolves

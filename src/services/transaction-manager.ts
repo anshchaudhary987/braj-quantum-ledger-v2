@@ -8,7 +8,7 @@ import {
 import {
   IdempotencyConflictError,
   InsufficientBalanceError,
-} from "../errors.js";
+} from "../errors/index.js";
 
 /**
  * TRANSACTION MANAGER SERVICE

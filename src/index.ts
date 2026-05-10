@@ -7,7 +7,7 @@ import { ReceiptVoucherStrategy } from "./vouchers/receipt-voucher.js";
 import { SalaryVoucherStrategy } from "./vouchers/salary-voucher.js";
 import { PurchaseInvoiceVoucherStrategy } from "./vouchers/purchase-voucher.js";
 import { CreateTransactionInput } from "./models/types.js";
-import { IdempotencyConflictError } from "./errors.js";
+import { IdempotencyConflictError } from "./errors/index.js";
 
 // ---------------------------------------------------------------------------
 // Bootstrap: register all voucher strategies at startup

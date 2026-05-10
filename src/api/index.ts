@@ -22,32 +22,32 @@ export type {
   SalesVoucherResponse,
   SalesVoucherLineResponse,
 } from "./types.js";
-export { EinvoiceService, Inv01PayloadMapper, GspAuthService, DistanceService, RetryWorker } from "../einvoicing.js";
+export { EinvoiceService, Inv01PayloadMapper, GspAuthService, DistanceService, RetryWorker } from "../einvoicing/index.js";
 export type {
   EInvoiceDetailRow, EwayBillDetailRow, RetryQueueRow,
   Inv01Payload, EwayBillPayload,
   GenerateEinvoiceInput, GenerateEwayBillInput,
   CancelEinvoiceInput, CancelEwayBillInput,
   DistanceCalcResult, GspApiResponse,
-} from "../einvoicing.js";
-export { PayrollService, PayrollEngine } from "../payroll.js";
+} from "../einvoicing/index.js";
+export { PayrollService, PayrollEngine } from "../payroll/index.js";
 export type {
   EmployeeRow, SalaryStructureRow, PayPeriodRow, AttendanceLogRow,
   PayrollRunRow, PayrollRunDetailRow, EmployeePayrollResult, PayrollRunResult,
   CreateEmployeeInput, CreateSalaryStructureInput, CreatePayPeriodInput,
   MarkAttendanceInput, RunPayrollInput, ApprovePayrollInput, JournalSummary,
-} from "../payroll.js";
-export { DocumentService, AiExtractionPipeline } from "../ocr.js";
+} from "../payroll/index.js";
+export { DocumentService, AiExtractionPipeline } from "../ocr/index.js";
 export type {
   UploadedDocumentRow, OcrExtractionResultRow, ExtractedInvoiceData,
   OcrPipelineResult, SmartMatchResult,
   UploadDocumentInput, StartExtractionInput,
   ApproveDraftVoucherInput, RejectVoucherInput, AmendExtractionInput,
   DocumentPreviewResponse, ExtractionReviewResponse,
-} from "../ocr.js";
-export { TallyImportEngine, TallyXmlParser, parseTallyDate, normalizeAccountName } from "../tally-import.js";
+} from "../ocr/index.js";
+export { TallyImportEngine, TallyXmlParser, parseTallyDate, normalizeAccountName } from "../tally-import/index.js";
 export type {
   TallyImportBatchRow, TallyMasterMappingRow,
   Phase1Result, Phase2Result, TallyImportResult, VerificationResult,
   StartTallyImportInput,
-} from "../tally-import.js";
+} from "../tally-import/index.js";
