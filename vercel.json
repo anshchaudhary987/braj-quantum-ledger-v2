@@ -3,7 +3,6 @@
   "version": 2,
 
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
 
   "functions": {
     "api/**/*": {
@@ -21,13 +20,18 @@
     { "source": "/api/v1/payroll/:path*", "destination": "/api/payroll/index.ts" },
     { "source": "/api/v1/ocr/:path*", "destination": "/api/ocr/index.ts" },
     { "source": "/api/v1/health", "destination": "/api/health.ts" },
-    { "source": "/api/v1/:path*", "destination": "/api/index.ts" }
+    { "source": "/(.*)", "destination": "/api/index.ts" }
   ],
 
   "redirects": [
     {
       "source": "/",
-      "destination": "/docs",
+      "destination": "/api/v1/health",
+      "permanent": false
+    },
+    {
+      "source": "/docs",
+      "destination": "/api/v1/docs/openapi.yaml",
       "permanent": false
     }
   ],
