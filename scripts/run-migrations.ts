@@ -9,6 +9,12 @@ import { logger } from "../src/config/logger";
 // Usage: tsx scripts/run-migrations.ts [up|down|create <name>]
 // ---------------------------------------------------------------------------
 
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const MIGRATIONS_DIR = join(__dirname, "..", "migrations");
 
 interface Migration {

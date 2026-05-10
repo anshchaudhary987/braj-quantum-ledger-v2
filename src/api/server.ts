@@ -87,12 +87,20 @@ app.use("/api/v1/tally-import", tallyImportRoutes);
 
 // ---- API Documentation (Swagger UI) ----
 // In production, serve the OpenAPI spec via a dedicated route.
-const openApiSpec = readFileSync(new URL("./openapi.yaml", import.meta.url), "utf8");
+let openApiSpec = "";
+try {
+  openApiSpec = readFileSync(new URL("./openapi.yaml", import.meta.url), "utf8");
+} catch (err) {
+  console.warn("Warning: Could not load openapi.yaml", err);
+}
+
 app.get("/api/v1/docs/openapi.yaml", (_req, res) => {
+  if (!openApiSpec) return res.status(404).send("OpenAPI spec not found");
   res.type("application/yaml").send(openApiSpec);
 });
 
 app.get("/api/v1/docs/openapi.json", (_req, res) => {
+  if (!openApiSpec) return res.status(404).send("OpenAPI spec not found");
   res.type("application/yaml").send(openApiSpec);
 });
 

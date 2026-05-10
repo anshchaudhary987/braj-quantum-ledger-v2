@@ -1,57 +1,23 @@
-'use client';
+import React from 'react';
 
-import React, { Suspense, lazy } from 'react';
-import dynamic from 'next/dynamic';
-
-// Lazy load heavy components for code splitting
-const HeroSection = lazy(() => import('@/components/landing/HeroSection'));
-const FeaturesSection = lazy(() => import('@/components/landing/FeaturesSection'));
-const TrustSection = lazy(() => import('@/components/landing/TrustSection'));
-const CTASection = lazy(() => import('@/components/landing/CTASection'));
-
-// Dynamic import for the 3D background (very heavy)
-const ImmersiveBackground = dynamic(
-  () => import('@/components/3d/ImmersiveScene').then((mod) => mod.ImmersiveBackground),
-  {
-    ssr: false, // Don't SSR Three.js
-    loading: () => <div className="absolute inset-0 bg-[#0F172A]" />,
-  }
-);
-
-// Loading fallback component
-function SectionFallback() {
-  return (
-    <div className="min-h-[50vh] flex items-center justify-center">
-      <div className="animate-pulse">
-        <div className="h-4 bg-white/10 rounded w-48 mb-4 mx-auto" />
-        <div className="h-8 bg-white/10 rounded w-64 mx-auto" />
-      </div>
-    </div>
-  );
-}
+// Server-safe imports (no client hooks)
+import HeroSection from '@/components/landing/HeroSection';
+import FeaturesSection from '@/components/landing/FeaturesSection';
+import TrustSection from '@/components/landing/TrustSection';
+import CTASection from '@/components/landing/CTASection';
 
 export default function Home() {
   return (
     <div className="relative min-h-screen bg-[#0F172A] overflow-x-hidden">
-      {/* Full-screen 3D Immersive Background - Fixed behind everything */}
-      <Suspense fallback={<div className="absolute inset-0 bg-[#0F172A]" />}>
-        <ImmersiveBackground />
-      </Suspense>
+      {/* Static gradient background (SSR safe) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-[#0F172A] to-slate-900 z-0" />
       
       {/* Content Layer */}
       <div className="relative z-10">
-        <Suspense fallback={<SectionFallback />}>
-          <HeroSection />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <FeaturesSection />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <TrustSection />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <CTASection />
-        </Suspense>
+        <HeroSection />
+        <FeaturesSection />
+        <TrustSection />
+        <CTASection />
         
         {/* Footer */}
         <footer className="py-12 px-4 border-t border-white/10 bg-[#0F172A]/80 backdrop-blur-sm relative z-10">
