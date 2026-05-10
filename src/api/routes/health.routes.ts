@@ -23,7 +23,7 @@ interface HealthStatus {
   };
 }
 
-router.get("/health", async (_req, res) => {
+router.get("/", async (_req, res) => {
   const startTime = Date.now();
   const pool = getPool();
   const health: HealthStatus = {

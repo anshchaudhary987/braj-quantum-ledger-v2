@@ -6,13 +6,9 @@
   "outputDirectory": "dist",
 
   "functions": {
-    "api/*.ts": {
+    "api/**/*": {
       "maxDuration": 30,
       "memory": 1024
-    },
-    "api/health.ts": {
-      "maxDuration": 5,
-      "memory": 256
     }
   },
 
