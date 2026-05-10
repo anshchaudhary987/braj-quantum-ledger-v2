@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import crypto from "crypto";
-import { AppError } from "../auth/auth-service";
-import { ErrorCode, ApiErrorResponse } from "../errors";
-import { logger } from "../../config/logger";
+import { AppError } from "../auth/auth-service.js";
+import { ErrorCode, ApiErrorResponse } from "../errors.js";
+import { logger } from "../../config/logger.js";
 
 /**
  * GLOBAL ERROR HANDLER — Catches all errors and returns the standard format.

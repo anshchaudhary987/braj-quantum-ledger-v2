@@ -1,6 +1,6 @@
 import { PoolClient } from "pg";
-import { AppError } from "../api/auth/auth-service";
-import { ErrorCode } from "../api/errors";
+import { AppError } from "../api/auth/auth-service.js";
+import { ErrorCode } from "../api/errors.js";
 
 // ---------------------------------------------------------------------------
 // PRICE LIST SERVICE — Customer-specific, slab-based, date-ranged pricing

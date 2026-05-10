@@ -6,8 +6,8 @@ import {
   BomItemRow,
   MfgJournalRow,
 } from "./manufacturing-types";
-import { AppError } from "../api/auth/auth-service";
-import { ErrorCode } from "../api/errors";
+import { AppError } from "../api/auth/auth-service.js";
+import { ErrorCode } from "../api/errors.js";
 
 // ---------------------------------------------------------------------------
 // MANUFACTURING SERVICE — Process a Manufacturing Journal

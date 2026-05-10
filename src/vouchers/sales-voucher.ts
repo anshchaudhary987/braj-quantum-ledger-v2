@@ -1,6 +1,6 @@
 import { PoolClient } from "pg";
-import { JournalLine, VoucherPayload } from "../models/types";
-import { VoucherStrategy } from "./voucher-strategy";
+import { JournalLine, VoucherPayload } from "../models/types.js";
+import { VoucherStrategy } from "./voucher-strategy.js";
 
 export class SalesVoucherStrategy implements VoucherStrategy {
   readonly voucherType = "SALES_VOUCHER";

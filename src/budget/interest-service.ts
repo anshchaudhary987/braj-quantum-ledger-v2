@@ -6,8 +6,8 @@ import {
   PostInterestProvisionInput,
   CreateBudgetInput,
 } from "./budget-types";
-import { AppError } from "../api/auth/auth-service";
-import { ErrorCode } from "../api/errors";
+import { AppError } from "../api/auth/auth-service.js";
+import { ErrorCode } from "../api/errors.js";
 
 // ---------------------------------------------------------------------------
 // INTEREST SERVICE — Interest calculation + overdue bill provisioning

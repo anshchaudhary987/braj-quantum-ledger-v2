@@ -1,8 +1,8 @@
-export { TransactionManager } from "./transaction-manager";
-export { BalanceService } from "./balance-service";
-export type { AccountBalance, HierarchicalBalanceRow } from "./balance-service";
-export { ReportingService } from "./reporting-service";
-export { getFinancialYear } from "./helpers";
+export { TransactionManager } from "./transaction-manager.js";
+export { BalanceService } from "./balance-service.js";
+export type { AccountBalance, HierarchicalBalanceRow } from "./balance-service.js";
+export { ReportingService } from "./reporting-service.js";
+export { getFinancialYear } from "./helpers.js";
 export type {
   TrialBalanceLine,
   TrialBalanceReport,

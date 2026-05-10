@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getPool } from "../../db/pool";
-import { logger } from "../../config/logger";
+import { getPool } from "../../db/pool.js";
+import { logger } from "../../config/logger.js";
 
 const router = Router();
 

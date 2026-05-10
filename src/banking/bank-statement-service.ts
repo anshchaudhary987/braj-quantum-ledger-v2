@@ -1,7 +1,7 @@
 import { PoolClient } from "pg";
 import crypto from "crypto";
-import { MatchingEngine } from "./matching-engine";
-import { TransactionManager } from "../services/transaction-manager";
+import { MatchingEngine } from "./matching-engine.js";
+import { TransactionManager } from "../services/transaction-manager.js";
 import {
   BankStatementRow,
   BankStatementImportInput,
@@ -11,8 +11,8 @@ import {
   MatchCandidate,
   AutoMatchResult,
 } from "./banking-types";
-import { AppError } from "../api/auth/auth-service";
-import { ErrorCode } from "../api/errors";
+import { AppError } from "../api/auth/auth-service.js";
+import { ErrorCode } from "../api/errors.js";
 
 // ---------------------------------------------------------------------------
 // BANK STATEMENT SERVICE — Import, AA Fetch, Unreconciled Queue, One-Click Voucher

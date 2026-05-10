@@ -5,8 +5,8 @@ import {
   DeliveryChallanRow,
   DeliveryChallanItemRow,
 } from "./jobwork-types";
-import { AppError } from "../api/auth/auth-service";
-import { ErrorCode } from "../api/errors";
+import { AppError } from "../api/auth/auth-service.js";
+import { ErrorCode } from "../api/errors.js";
 
 // ---------------------------------------------------------------------------
 // CHALLAN SERVICE — Job Work Out / In (non-accounting vouchers)

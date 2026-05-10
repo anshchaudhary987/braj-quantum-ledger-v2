@@ -1,6 +1,6 @@
 import { PoolClient } from "pg";
-import { TcsCalculationInput, TcsCalculationResult, TcsEntryRow } from "./tds-types";
-import { TdsDeductionEngine } from "./tds-deduction-engine";
+import { TcsCalculationInput, TcsCalculationResult, TcsEntryRow } from "./tds-types.js";
+import { TdsDeductionEngine } from "./tds-deduction-engine.js";
 
 // ---------------------------------------------------------------------------
 // TCS ENGINE — Tax Collected at Source (Section 206C(1H))

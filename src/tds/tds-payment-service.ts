@@ -1,7 +1,7 @@
 import { PoolClient } from "pg";
-import { TaxPaymentRow, Form26QRow } from "./tds-types";
-import { AppError } from "../api/auth/auth-service";
-import { ErrorCode } from "../api/errors";
+import { TaxPaymentRow, Form26QRow } from "./tds-types.js";
+import { AppError } from "../api/auth/auth-service.js";
+import { ErrorCode } from "../api/errors.js";
 
 // ---------------------------------------------------------------------------
 // TDS PAYMENT SERVICE — Challan management + Form 26Q / 24Q

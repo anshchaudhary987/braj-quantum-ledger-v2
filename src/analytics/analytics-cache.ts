@@ -359,8 +359,8 @@ export const analyticsCache = new AnalyticsCache();
 // INTEGRATION EXAMPLE — wire into your journal posting service:
 // ---------------------------------------------------------------------------
 //
-// import { analyticsCache, determineAffectedReports } from "./analytics-cache";
-// import { AnalyticsEventType } from "./analytics-types";
+// import { analyticsCache, determineAffectedReports } from "./analytics-cache.js";
+// import { AnalyticsEventType } from "./analytics-types.js";
 //
 // async function postJournalEntry(txn: CreateTransaction): Promise<number> {
 //   const txnId = await db.insertTransaction(txn);

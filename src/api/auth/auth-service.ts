@@ -13,7 +13,7 @@ import {
   UserProfile,
   CompanyBrief,
 } from "../types";
-import { ErrorCode } from "../errors";
+import { ErrorCode } from "../errors.js";
 
 // ---------------------------------------------------------------------------
 // AUTH SERVICE — JWT + Refresh Token Rotation

@@ -1,4 +1,4 @@
-import { GstinValidationResult, StateMasterRow } from "./gst-types";
+import { GstinValidationResult, StateMasterRow } from "./gst-types.js";
 
 // ---------------------------------------------------------------------------
 // GST VALIDATOR — GSTIN format, checksum, state code, PAN extraction

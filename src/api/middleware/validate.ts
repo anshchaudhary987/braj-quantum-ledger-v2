@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodSchema, ZodError } from "zod";
-import { ErrorCode } from "../errors";
-import { AppError } from "../auth/auth-service";
+import { ErrorCode } from "../errors.js";
+import { AppError } from "../auth/auth-service.js";
 import crypto from "crypto";
 
 type RequestValidator =

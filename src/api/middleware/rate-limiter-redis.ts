@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import Redis from "ioredis";
-import { ErrorCode } from "../errors";
-import { AppError } from "../auth/auth-service";
-import { logger } from "../../config/logger";
+import { ErrorCode } from "../errors.js";
+import { AppError } from "../auth/auth-service.js";
+import { logger } from "../../config/logger.js";
 
 // ---------------------------------------------------------------------------
 // REDIS-BACKED TOKEN-BUCKET RATE LIMITER

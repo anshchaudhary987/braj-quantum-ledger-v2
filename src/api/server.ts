@@ -3,16 +3,16 @@ import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
 import { readFileSync } from "node:fs";
-import { errorHandler, notFoundHandler } from "./middleware/error-handler";
-import { globalRateLimiter } from "./middleware/rate-limiter-redis";
-import authRoutes from "./routes/auth.routes";
-import voucherRoutes from "./routes/voucher.routes";
-import einvoiceRoutes from "./routes/einvoice.routes";
-import payrollRoutes from "./routes/payroll.routes";
-import ocrRoutes from "./routes/ocr.routes";
-import tallyImportRoutes from "./routes/tally-import.routes";
-import healthRouter from "./routes/health.routes";
-import { logger } from "../config/logger";
+import { errorHandler, notFoundHandler } from "./middleware/error-handler.js.js";
+import { globalRateLimiter } from "./middleware/rate-limiter-redis.js.js";
+import authRoutes from "./routes/auth.routes.js.js";
+import voucherRoutes from "./routes/voucher.routes.js.js";
+import einvoiceRoutes from "./routes/einvoice.routes.js.js";
+import payrollRoutes from "./routes/payroll.routes.js.js";
+import ocrRoutes from "./routes/ocr.routes.js.js";
+import tallyImportRoutes from "./routes/tally-import.routes.js.js";
+import healthRouter from "./routes/health.routes.js.js";
+import { logger } from "../config/logger.js.js";
 
 // ---------------------------------------------------------------------------
 // EXPRESS APPLICATION SETUP

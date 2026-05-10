@@ -4,18 +4,18 @@
 
 import { Router, Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { ErrorCode } from "../errors";
-import { AppError } from "../auth/auth-service";
-import { validate } from "../middleware/validate";
-import { requireAuth, requireRole, setSecurityContext } from "../auth/auth-middleware";
-import { voucherRateLimiter } from "../middleware/rate-limiter-redis";
-import { withClient, withTransaction } from "../../db/pool";
+import { ErrorCode } from "../errors.js";
+import { AppError } from "../auth/auth-service.js";
+import { validate } from "../middleware/validate.js";
+import { requireAuth, requireRole, setSecurityContext } from "../auth/auth-middleware.js";
+import { voucherRateLimiter } from "../middleware/rate-limiter-redis.js";
+import { withClient, withTransaction } from "../../db/pool.js";
 import { PoolClient } from "pg";
-import { DocumentService } from "../../ocr/document-service";
-import { AiExtractionPipeline } from "../../ocr/ai-extraction.service";
-import { PurchaseInvoiceVoucherStrategy } from "../../vouchers/purchase-voucher";
-import { VoucherFactory } from "../../vouchers/voucher-factory";
-import { TransactionManager } from "../../services/transaction-manager";
+import { DocumentService } from "../../ocr/document-service.js";
+import { AiExtractionPipeline } from "../../ocr/ai-extraction.service.js";
+import { PurchaseInvoiceVoucherStrategy } from "../../vouchers/purchase-voucher.js";
+import { VoucherFactory } from "../../vouchers/voucher-factory.js";
+import { TransactionManager } from "../../services/transaction-manager.js";
 import {
   UploadDocumentInput,
   StartExtractionInput,

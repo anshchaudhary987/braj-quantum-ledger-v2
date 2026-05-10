@@ -12,7 +12,7 @@
 import * as sax from "sax";
 import { createReadStream } from "fs";
 import { Readable } from "stream";
-import { TallyLedger, TallyGroup, TallyVoucher, TallyAllLedgerEntry } from "./tally-types";
+import { TallyLedger, TallyGroup, TallyVoucher, TallyAllLedgerEntry } from "./tally-types.js";
 
 export type TallyXMLCallback = {
   onLedger: (ledger: TallyLedger) => Promise<void> | void;

@@ -1,7 +1,7 @@
 import { PoolClient } from "pg";
-import { CreateBomInput, BomRow, BomItemRow } from "./manufacturing-types";
-import { AppError } from "../api/auth/auth-service";
-import { ErrorCode } from "../api/errors";
+import { CreateBomInput, BomRow, BomItemRow } from "./manufacturing-types.js";
+import { AppError } from "../api/auth/auth-service.js";
+import { ErrorCode } from "../api/errors.js";
 
 // ---------------------------------------------------------------------------
 // BOM SERVICE — Manage Bills of Materials

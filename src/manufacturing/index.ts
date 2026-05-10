@@ -1,4 +1,4 @@
-export { BomService } from "./bom-service";
-export { ManufacturingService } from "./mfg-service";
-export { PriceListService } from "./price-list-service";
-export type * from "./manufacturing-types";
+export { BomService } from "./bom-service.js";
+export { ManufacturingService } from "./mfg-service.js";
+export { PriceListService } from "./price-list-service.js";
+export type * from "./manufacturing-types.js";

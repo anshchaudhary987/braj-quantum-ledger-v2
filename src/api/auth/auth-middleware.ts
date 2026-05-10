@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { AuthService } from "./auth-service";
-import { runWithDbSecurityContext } from "../../db/pool";
-import { JwtPayload } from "../types";
-import { ErrorCode } from "../errors";
-import { AppError } from "./auth-service";
+import { AuthService } from "./auth-service.js";
+import { runWithDbSecurityContext } from "../../db/pool.js";
+import { JwtPayload } from "../types.js";
+import { ErrorCode } from "../errors.js";
+import { AppError } from "./auth-service.js";
 
 // Extend Express Request to carry auth context
 declare global {

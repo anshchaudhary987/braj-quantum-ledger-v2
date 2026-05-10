@@ -21,7 +21,7 @@ import {
   SupplyType,
   EwayBillPayload,
 } from "./einvoice-types";
-import { TaxEntryRow, GstRegistrationRow, StateMasterRow } from "../gst/gst-types";
+import { TaxEntryRow, GstRegistrationRow, StateMasterRow } from "../gst/gst-types.js";
 
 // ── INTERNAL ROW TYPES (extended for this module) ───────────────────────────
 

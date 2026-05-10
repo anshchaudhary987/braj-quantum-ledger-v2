@@ -21,9 +21,9 @@ import {
   DistanceCalcResult,
   RetryQueueRow,
 } from "./einvoice-types";
-import { Inv01PayloadMapper } from "./payload-mapper";
-import { DistanceService } from "./distance-service";
-import { GspAuthService } from "./gsp-auth";
+import { Inv01PayloadMapper } from "./payload-mapper.js";
+import { DistanceService } from "./distance-service.js";
+import { GspAuthService } from "./gsp-auth.js";
 
 export class EinvoiceService {
   constructor(private readonly client: PoolClient) {}

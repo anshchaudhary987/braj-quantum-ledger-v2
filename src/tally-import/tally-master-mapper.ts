@@ -13,8 +13,8 @@
 // ============================================================================
 
 import { PoolClient } from "pg";
-import { TallyLedger, TallyGroup, TallyMasterMappingRow, Phase1Result } from "./tally-types";
-import { normalizeAccountName, generateTallyAccountCode } from "./tally-xml-parser";
+import { TallyLedger, TallyGroup, TallyMasterMappingRow, Phase1Result } from "./tally-types.js";
+import { normalizeAccountName, generateTallyAccountCode } from "./tally-xml-parser.js";
 
 // Tally system defaults that should never create duplicates
 const SYSTEM_DEFAULT_LEDGERS = new Set([

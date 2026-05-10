@@ -12,7 +12,7 @@
 // ============================================================================
 
 import { PoolClient } from "pg";
-import { DistanceCalcResult } from "./einvoice-types";
+import { DistanceCalcResult } from "./einvoice-types.js";
 
 interface PinCodeRow {
   pin_code: string;

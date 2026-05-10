@@ -1,5 +1,5 @@
 import { PoolClient } from "pg";
-import { StockLayerRow, FifoConsumption } from "./inventory-types";
+import { StockLayerRow, FifoConsumption } from "./inventory-types.js";
 
 // ---------------------------------------------------------------------------
 // VALUATION SERVICE — FIFO & Weighted Average Cost

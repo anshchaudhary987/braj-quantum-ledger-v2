@@ -5,8 +5,8 @@ import {
   BudgetPeriodRow,
   BudgetVarianceRow,
 } from "./budget-types";
-import { AppError } from "../api/auth/auth-service";
-import { ErrorCode } from "../api/errors";
+import { AppError } from "../api/auth/auth-service.js";
+import { ErrorCode } from "../api/errors.js";
 
 // ---------------------------------------------------------------------------
 // BUDGET SERVICE — CRUD + Actual vs Budget variance

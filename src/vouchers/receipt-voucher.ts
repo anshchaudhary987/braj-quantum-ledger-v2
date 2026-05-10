@@ -1,6 +1,6 @@
 import { PoolClient } from "pg";
-import { VoucherStrategy } from "./voucher-strategy";
-import { JournalLine, VoucherPayload } from "../models/types";
+import { VoucherStrategy } from "./voucher-strategy.js";
+import { JournalLine, VoucherPayload } from "../models/types.js";
 
 /**
  * RECEIPT_VOUCHER

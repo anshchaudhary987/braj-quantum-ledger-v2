@@ -1,21 +1,21 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { AppError } from "../auth/auth-service";
-import { validate } from "../middleware/validate";
-import { voucherRateLimiter } from "../middleware/rate-limiter-redis";
-import { requireAuth, requireRole, setSecurityContext } from "../auth/auth-middleware";
-import { withClient, withTransaction } from "../../db/pool";
-import { TransactionManager } from "../../services/transaction-manager";
-import { InventoryService } from "../../inventory/inventory-service";
-import { TaxCalculator } from "../../gst/tax-calculator";
-import { VoucherFactory } from "../../vouchers/voucher-factory";
-import { SalesVoucherStrategy } from "../../vouchers/sales-voucher";
+import { AppError } from "../auth/auth-service.js";
+import { validate } from "../middleware/validate.js";
+import { voucherRateLimiter } from "../middleware/rate-limiter-redis.js";
+import { requireAuth, requireRole, setSecurityContext } from "../auth/auth-middleware.js";
+import { withClient, withTransaction } from "../../db/pool.js";
+import { TransactionManager } from "../../services/transaction-manager.js";
+import { InventoryService } from "../../inventory/inventory-service.js";
+import { TaxCalculator } from "../../gst/tax-calculator.js";
+import { VoucherFactory } from "../../vouchers/voucher-factory.js";
+import { SalesVoucherStrategy } from "../../vouchers/sales-voucher.js";
 import {
   SalesVoucherRequest,
   SalesVoucherResponse,
   SalesVoucherLineResponse,
 } from "../types";
-import { ErrorCode } from "../errors";
+import { ErrorCode } from "../errors.js";
 import { PoolClient } from "pg";
 
 const router = Router();

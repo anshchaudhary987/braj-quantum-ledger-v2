@@ -1,5 +1,5 @@
 import { PoolClient } from "pg";
-import { ModuleName, ActionName, SecurityContext } from "./security-types";
+import { ModuleName, ActionName, SecurityContext } from "./security-types.js";
 
 // ---------------------------------------------------------------------------
 // RBAC SERVICE — Authorization checks + security context setup

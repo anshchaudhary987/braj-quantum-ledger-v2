@@ -2,8 +2,8 @@
 // AI DOCUMENT OCR PIPELINE — Module barrel export
 // ============================================================================
 
-export { DocumentService } from "./document-service";
-export { AiExtractionPipeline } from "./ai-extraction.service";
+export { DocumentService } from "./document-service.js";
+export { AiExtractionPipeline } from "./ai-extraction.service.js";
 export type {
   DocumentStatus,
   DocEntityType,

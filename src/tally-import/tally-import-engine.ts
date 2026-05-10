@@ -19,10 +19,10 @@
 import { PoolClient } from "pg";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { Readable } from "stream";
-import { TallyXmlParser, parseTallyDate } from "./tally-xml-parser";
-import { TallyMasterMapper } from "./tally-master-mapper";
-import { TallyVoucherMapper, MappedVoucher } from "./tally-voucher-mapper";
-import { TransactionManager } from "../services/transaction-manager";
+import { TallyXmlParser, parseTallyDate } from "./tally-xml-parser.js";
+import { TallyMasterMapper } from "./tally-master-mapper.js";
+import { TallyVoucherMapper, MappedVoucher } from "./tally-voucher-mapper.js";
+import { TransactionManager } from "../services/transaction-manager.js";
 import {
   TallyLedger, TallyGroup, TallyVoucher,
   TallyImportBatchRow, Phase1Result, Phase2Result,

@@ -2,8 +2,8 @@
 // PAYROLL & HRMS — Module barrel export
 // ============================================================================
 
-export { PayrollService } from "./payroll-service";
-export { PayrollEngine } from "./payroll-engine";
+export { PayrollService } from "./payroll-service.js";
+export { PayrollEngine } from "./payroll-engine.js";
 export type {
   EmployeeStatus,
   PayrollStatus,

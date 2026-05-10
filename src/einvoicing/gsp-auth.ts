@@ -3,8 +3,8 @@
 // Handles token lifecycle, caching, and auto-refresh for GSP/NIC portals.
 // ============================================================================
 
-import { getPool, withClient } from "../db/pool";
-import { GspCredentialRow, GspAuthToken } from "./einvoice-types";
+import { getPool, withClient } from "../db/pool.js";
+import { GspCredentialRow, GspAuthToken } from "./einvoice-types.js";
 
 // In-memory token store keyed by gsp_credential_id
 const tokenCache = new Map<number, GspAuthToken>();

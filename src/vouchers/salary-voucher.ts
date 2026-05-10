@@ -39,8 +39,8 @@
 // ============================================================================
 
 import { PoolClient } from "pg";
-import { VoucherStrategy } from "./voucher-strategy";
-import { JournalLine, VoucherPayload } from "../models/types";
+import { VoucherStrategy } from "./voucher-strategy.js";
+import { JournalLine, VoucherPayload } from "../models/types.js";
 
 export class SalaryVoucherStrategy implements VoucherStrategy {
   readonly voucherType = "SALARY_VOUCHER";

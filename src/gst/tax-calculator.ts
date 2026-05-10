@@ -8,7 +8,7 @@ import {
   GstRegistrationRow,
   StateMasterRow,
 } from "./gst-types";
-import { validateGstin, validatePlaceOfSupply } from "./gst-validator";
+import { validateGstin, validatePlaceOfSupply } from "./gst-validator.js";
 
 // ---------------------------------------------------------------------------
 // AUTO-TAX CALCULATOR SERVICE

@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { PoolClient } from "pg";
-import { PayrollEngine } from "./payroll-engine";
+import { PayrollEngine } from "./payroll-engine.js";
 import {
   EmployeeRow,
   PayPeriodRow,

@@ -1,5 +1,5 @@
 import { PoolClient } from "pg";
-import { VoucherFactory } from "../vouchers/voucher-factory";
+import { VoucherFactory } from "../vouchers/voucher-factory.js";
 import {
   CreateTransactionInput,
   JournalLine,

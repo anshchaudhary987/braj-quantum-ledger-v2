@@ -21,8 +21,8 @@
 // ============================================================================
 
 import { PoolClient } from "pg";
-import { TallyVoucher, TallyAllLedgerEntry } from "./tally-types";
-import { parseTallyDate, normalizeAccountName } from "./tally-xml-parser";
+import { TallyVoucher, TallyAllLedgerEntry } from "./tally-types.js";
+import { parseTallyDate, normalizeAccountName } from "./tally-xml-parser.js";
 
 /**
  * Map Tally VOUCHERTYPENAME to our internal voucher_type

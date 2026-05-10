@@ -19,9 +19,9 @@
 // ============================================================================
 
 import { PoolClient } from "pg";
-import { getPool, withClient, withTransaction } from "../db/pool";
-import { EinvoiceService } from "./einvoice-service";
-import { RetryQueueRow } from "./einvoice-types";
+import { getPool, withClient, withTransaction } from "../db/pool.js";
+import { EinvoiceService } from "./einvoice-service.js";
+import { RetryQueueRow } from "./einvoice-types.js";
 
 // ── Configuration ──────────────────────────────────────────────────────────
 

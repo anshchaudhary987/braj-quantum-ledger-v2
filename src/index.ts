@@ -1,13 +1,13 @@
 import { PoolClient } from "pg";
-import { withClient, withTransaction } from "./db/pool";
-import { TransactionManager } from "./services/transaction-manager";
-import { VoucherFactory } from "./vouchers/voucher-factory";
-import { PaymentVoucherStrategy } from "./vouchers/payment-voucher";
-import { ReceiptVoucherStrategy } from "./vouchers/receipt-voucher";
-import { SalaryVoucherStrategy } from "./vouchers/salary-voucher";
-import { PurchaseInvoiceVoucherStrategy } from "./vouchers/purchase-voucher";
-import { CreateTransactionInput } from "./models/types";
-import { IdempotencyConflictError } from "./errors";
+import { withClient, withTransaction } from "./db/pool.js";
+import { TransactionManager } from "./services/transaction-manager.js";
+import { VoucherFactory } from "./vouchers/voucher-factory.js";
+import { PaymentVoucherStrategy } from "./vouchers/payment-voucher.js";
+import { ReceiptVoucherStrategy } from "./vouchers/receipt-voucher.js";
+import { SalaryVoucherStrategy } from "./vouchers/salary-voucher.js";
+import { PurchaseInvoiceVoucherStrategy } from "./vouchers/purchase-voucher.js";
+import { CreateTransactionInput } from "./models/types.js";
+import { IdempotencyConflictError } from "./errors.js";
 
 // ---------------------------------------------------------------------------
 // Bootstrap: register all voucher strategies at startup

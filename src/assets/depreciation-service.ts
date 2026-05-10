@@ -6,7 +6,7 @@
 // ============================================================================
 
 import { PoolClient } from "pg";
-import { AssetBlock, FixedAsset, DepreciationRun, DepreciationRunItem, CreateAssetInput } from "./depreciation-types";
+import { AssetBlock, FixedAsset, DepreciationRun, DepreciationRunItem, CreateAssetInput } from "./depreciation-types.js";
 
 export class DepreciationService {
   constructor(private readonly client: PoolClient) {}

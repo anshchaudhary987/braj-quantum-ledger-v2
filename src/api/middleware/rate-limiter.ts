@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { ErrorCode } from "../errors";
-import { AppError } from "../auth/auth-service";
+import { ErrorCode } from "../errors.js";
+import { AppError } from "../auth/auth-service.js";
 
 /**
  * IN-MEMORY TOKEN-BUCKET RATE LIMITER

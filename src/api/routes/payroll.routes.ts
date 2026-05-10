@@ -4,17 +4,17 @@
 
 import { Router, Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { ErrorCode } from "../errors";
-import { AppError } from "../auth/auth-service";
-import { validate } from "../middleware/validate";
-import { requireAuth, requireRole, setSecurityContext } from "../auth/auth-middleware";
-import { voucherRateLimiter } from "../middleware/rate-limiter-redis";
-import { withClient, withTransaction } from "../../db/pool";
+import { ErrorCode } from "../errors.js";
+import { AppError } from "../auth/auth-service.js";
+import { validate } from "../middleware/validate.js";
+import { requireAuth, requireRole, setSecurityContext } from "../auth/auth-middleware.js";
+import { voucherRateLimiter } from "../middleware/rate-limiter-redis.js";
+import { withClient, withTransaction } from "../../db/pool.js";
 import { PoolClient } from "pg";
-import { PayrollService } from "../../payroll/payroll-service";
-import { PayrollEngine } from "../../payroll/payroll-engine";
-import { SalaryVoucherStrategy } from "../../vouchers/salary-voucher";
-import { VoucherFactory } from "../../vouchers/voucher-factory";
+import { PayrollService } from "../../payroll/payroll-service.js";
+import { PayrollEngine } from "../../payroll/payroll-engine.js";
+import { SalaryVoucherStrategy } from "../../vouchers/salary-voucher.js";
+import { VoucherFactory } from "../../vouchers/voucher-factory.js";
 import {
   CreateEmployeeInput,
   CreateSalaryStructureInput,

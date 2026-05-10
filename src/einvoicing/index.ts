@@ -2,11 +2,11 @@
 // E-INVOICING — Module barrel export
 // ============================================================================
 
-export { EinvoiceService } from "./einvoice-service";
-export { Inv01PayloadMapper } from "./payload-mapper";
-export { GspAuthService } from "./gsp-auth";
-export { DistanceService } from "./distance-service";
-export { RetryWorker } from "./retry-worker";
+export { EinvoiceService } from "./einvoice-service.js";
+export { Inv01PayloadMapper } from "./payload-mapper.js";
+export { GspAuthService } from "./gsp-auth.js";
+export { DistanceService } from "./distance-service.js";
+export { RetryWorker } from "./retry-worker.js";
 export type {
   EInvoiceStatus,
   EwayBillStatus,

@@ -1,12 +1,12 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { AuthService, AppError } from "../auth/auth-service";
-import { validate } from "../middleware/validate";
-import { authRateLimiter } from "../middleware/rate-limiter-redis";
-import { withClient, withTransaction } from "../../db/pool";
-import { requireAuth } from "../auth/auth-middleware";
-import { LoginRequest, RefreshRequest, RegisterRequest } from "../types";
-import { ErrorCode } from "../errors";
+import { AuthService, AppError } from "../auth/auth-service.js";
+import { validate } from "../middleware/validate.js";
+import { authRateLimiter } from "../middleware/rate-limiter-redis.js";
+import { withClient, withTransaction } from "../../db/pool.js";
+import { requireAuth } from "../auth/auth-middleware.js";
+import { LoginRequest, RefreshRequest, RegisterRequest } from "../types.js";
+import { ErrorCode } from "../errors.js";
 
 const router = Router();
 

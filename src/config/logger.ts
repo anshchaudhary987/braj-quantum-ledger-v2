@@ -7,7 +7,7 @@ import pino from "pino";
 // compatible with EL Stack, Datadog, Splunk, and CloudWatch.
 //
 // Usage:
-//   import { logger } from "../config/logger";
+//   import { logger } from "../config/logger.js";
 //   logger.info({ userId: 123 }, "User logged in");
 //   logger.error({ err }, "Payment failed");
 // ---------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 import { PoolClient } from "pg";
-import { JournalLine, VoucherPayload } from "../models/types";
+import { JournalLine, VoucherPayload } from "../models/types.js";
 
 /**
  * Strategy interface — every voucher type implements this to translate

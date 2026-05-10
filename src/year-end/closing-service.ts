@@ -13,7 +13,7 @@
 // ============================================================================
 
 import { PoolClient } from "pg";
-import { YearEndClosing, YearEndSummary } from "./closing-types";
+import { YearEndClosing, YearEndSummary } from "./closing-types.js";
 import { getFinancialYear } from "@services";
 
 export class YearEndClosingService {

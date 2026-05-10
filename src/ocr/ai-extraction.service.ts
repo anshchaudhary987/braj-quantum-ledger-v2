@@ -25,7 +25,7 @@
 // ============================================================================
 
 import { PoolClient } from "pg";
-import { DocumentService } from "./document-service";
+import { DocumentService } from "./document-service.js";
 import {
   OcrExtractionResultRow,
   ExtractedInvoiceData,
